@@ -20,7 +20,7 @@ program
 program
 	.command('pack')
 	.description('Package standalone Next12 build into Lambda compatible ZIPs.')
-	.option('--cwd', 'Current working directory', process.cwd())
+	.option('--cwd <path>', 'Current working directory', process.cwd())
 	.option(
 		'--standaloneFolder <path>',
 		'Folder including NextJS standalone build. Parental folder should include more folders as well.',
