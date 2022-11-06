@@ -265,12 +265,12 @@ export const validatePublicFolderStructure = (publicFolderPath: string) => {
 		return
 	}
 
-	const paths = readdirSync(publicFolderPath)
-	paths.forEach((publicPath) => {
-		if (publicPath !== 'assets') {
-			throw new Error('Public folder assets must be nested in public/assets folder.')
-		}
-	})
+	// const paths = readdirSync(publicFolderPath)
+	// paths.forEach((publicPath) => {
+	// 	if (publicPath !== 'assets') {
+	// 		throw new Error('Public folder assets must be nested in public/assets folder.')
+	// 	}
+	// })
 }
 
 export const validateFolderExists = (folderPath: string) => {
