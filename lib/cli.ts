@@ -20,6 +20,7 @@ program
 program
 	.command('pack')
 	.description('Package standalone Next12 build into Lambda compatible ZIPs.')
+	.option('--cwd', 'Current working directory', process.cwd())
 	.option(
 		'--standaloneFolder <path>',
 		'Folder including NextJS standalone build. Parental folder should include more folders as well.',
@@ -42,8 +43,8 @@ program
 	)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { standaloneFolder, publicFolder, handlerPath, outputFolder } = options
-		wrapProcess(packHandler({ commandCwd, handlerPath, outputFolder, publicFolder, standaloneFolder }))
+		const { standaloneFolder, publicFolder, handlerPath, outputFolder, cwd } = options
+		wrapProcess(packHandler({ commandCwd: cwd, handlerPath, outputFolder, publicFolder, standaloneFolder }))
 	})
 
 program
