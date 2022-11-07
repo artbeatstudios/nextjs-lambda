@@ -27,12 +27,12 @@ const webpackConfig: Configuration = {
 	externals: {
 		sharp: 'commonjs sharp',
 	},
-	plugins: [
-		new ZipPlugin({
-			path: path.resolve(__dirname, 'dist'),
-			filename: 'image-handler.zip',
-		}),
-	],
+	// plugins: [
+	// 	new ZipPlugin({
+	// 		path: path.resolve(__dirname, 'dist'),
+	// 		filename: 'image-handler.zip',
+	// 	}),
+	// ],
 }
 
 export default webpackConfig

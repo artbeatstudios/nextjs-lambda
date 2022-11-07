@@ -62,6 +62,7 @@ program
 program
 	.command('shipit')
 	.description('Get last tag, calculate bump version for all commits that happened and create release branch.')
+	.option('--cwd <path>', 'Current working directory', process.cwd())
 	.option('--failOnMissingCommit', 'In case commit has not happened since last tag (aka. we are on latest tag) fail.', Boolean, true)
 	.option('-f, --forceBump', 'In case no compatible commits found, use patch as fallback and ensure bump happens.', Boolean, true)
 	.option('-a, --autoPush', 'This will automatically create release branch and tag commit in master.', Boolean, true)
@@ -72,7 +73,7 @@ program
 	.option('--changelog', 'Generate changelog.', false)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { tagPrefix, failOnMissingCommit, releaseBranchPrefix, forceBump, gitUser, gitEmail, changelog } = options
+		const { tagPrefix, failOnMissingCommit, releaseBranchPrefix, forceBump, gitUser, gitEmail, changelog, cwd } = options
 		wrapProcess(
 			shipitHandler({
 				tagPrefix,
@@ -82,7 +83,7 @@ program
 				forceBump,
 				releaseBranchPrefix,
 				generateChangelog: changelog,
-				changelogPath: path.resolve(commandCwd, './CHANGELOG.md'),
+				changelogPath: path.resolve(cwd, './CHANGELOG.md'),
 			}),
 		)
 	})
@@ -99,19 +100,20 @@ program
 	.option('--domainNamePrefix <prefix>', 'Prefix for creating DNS records, if left undefined, hostedZone will be used (example: app).', undefined)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory, hostedZone, domainNamePrefix } = options
-		wrapProcess(deployHandler({ stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory, hostedZone, domainNamePrefix }))
+		// const { stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory, hostedZone, domainNamePrefix } = options
+		wrapProcess(deployHandler(options))
 	})
 
 program
 	.command('changelog')
 	.description('Generate changelog from Git, assuming tag being a release.')
-	.option('--outputFile <path>', 'Path to file where changelog should be written.', path.resolve(commandCwd, './CHANGELOG.md'))
+	.option('--cwd <path>', 'Current working directory', process.cwd())
+	.option('--outputFile <path>', 'Path to file where changelog should be written.', './CHANGELOG.md')
 	.option('--gitBaseUrl <url>', 'Absolute URL to your git project', undefined)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { outputFile, gitBaseUrl } = options
-		wrapProcess(changelogHandler({ outputFile, gitBaseUrl }))
+		const { outputFile, gitBaseUrl, cwd } = options
+		wrapProcess(changelogHandler({ outputFile: path.resolve(cwd, outputFile), gitBaseUrl }))
 	})
 
 program.parse(process.argv)

@@ -8,7 +8,7 @@ if (!process.env.STACK_NAME) {
 	throw new Error('Name of CDK stack was not specified!')
 }
 
-const commandCwd = process.cwd()
+const commandCwd = process.env.CWD ?? process.cwd()
 
 // This is configured in rollup as exported file is in dist folder.
 const cdkFolder = __dirname
