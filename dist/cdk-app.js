@@ -237,12 +237,12 @@ class NextStandaloneStack extends awsCdkLib.Stack {
     }
 }
 
-var _a, _b;
+var _a, _b, _c;
 const app = new awsCdkLib.App();
 if (!process.env.STACK_NAME) {
     throw new Error('Name of CDK stack was not specified!');
 }
-const commandCwd = process.cwd();
+const commandCwd = (_a = process.env.CWD) !== null && _a !== void 0 ? _a : process.cwd();
 // This is configured in rollup as exported file is in dist folder.
 const cdkFolder = __dirname;
 new NextStandaloneStack(app, process.env.STACK_NAME, {
@@ -256,8 +256,8 @@ new NextStandaloneStack(app, process.env.STACK_NAME, {
     customImageHandler: 'handler.handler',
     lambdaTimeout: process.env.LAMBDA_TIMEOUT ? Number(process.env.LAMBDA_TIMEOUT) : 15,
     lambdaMemory: process.env.LAMBDA_MEMORY ? Number(process.env.LAMBDA_MEMORY) : 1024,
-    hostedZone: (_a = process.env.HOSTED_ZONE) !== null && _a !== void 0 ? _a : undefined,
-    dnsPrefix: (_b = process.env.DNS_PREFIX) !== null && _b !== void 0 ? _b : undefined,
+    hostedZone: (_b = process.env.HOSTED_ZONE) !== null && _b !== void 0 ? _b : undefined,
+    dnsPrefix: (_c = process.env.DNS_PREFIX) !== null && _c !== void 0 ? _c : undefined,
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
         region: process.env.CDK_DEFAULT_REGION,

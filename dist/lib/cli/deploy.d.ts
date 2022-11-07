@@ -1,4 +1,5 @@
 interface Props {
+    cwd: string;
     stackName: string;
     appPath: string;
     bootstrap: boolean;
@@ -7,5 +8,5 @@ interface Props {
     hostedZone?: string;
     domainNamePrefix?: string;
 }
-export declare const deployHandler: ({ stackName, appPath, bootstrap, lambdaMemory, lambdaTimeout, domainNamePrefix, hostedZone }: Props) => Promise<void>;
+export declare const deployHandler: ({ cwd, stackName, appPath, bootstrap, lambdaMemory, lambdaTimeout, domainNamePrefix, hostedZone }: Props) => Promise<void>;
 export {};
