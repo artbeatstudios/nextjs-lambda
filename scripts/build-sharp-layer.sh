@@ -27,6 +27,7 @@ unzip dist/sharp-layer.zip -d .webpack
 mv .webpack/nodejs/node_modules .webpack
 mv .webpack/nodejs/* .webpack
 rm -rf .webpack/nodejs
+rm -rf dist/sharp-layer.zip
 
 # after we've unpacked and include node_modules we can zip it all back up
 zip dist/image-handler.zip -r .webpack/*

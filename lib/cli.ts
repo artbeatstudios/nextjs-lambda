@@ -91,6 +91,7 @@ program
 program
 	.command('deploy')
 	.description('Deploy Next application via CDK')
+	.option('--cwd <path>', 'Current working directory', process.cwd())
 	.option('--stackName <name>', 'Name of the stack to be deployed.', 'StandaloneNextjsStack-Temporary')
 	.option('--appPath <path>', 'Absolute path to app.', path.resolve(__dirname, '../dist/cdk-app.js'))
 	.option('--bootstrap', 'Bootstrap CDK stack.', false)
