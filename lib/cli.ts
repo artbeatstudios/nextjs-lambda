@@ -21,16 +21,8 @@ program
 	.command('pack')
 	.description('Package standalone Next12 build into Lambda compatible ZIPs.')
 	.option('--cwd <path>', 'Current working directory', process.cwd())
-	.option(
-		'--standaloneFolder <path>',
-		'Folder including NextJS standalone build. Parental folder should include more folders as well.',
-		path.resolve(commandCwd, '.next/standalone'),
-	)
-	.option(
-		'--publicFolder <path>',
-		'Folder where public assets are located, typically this folder is located in root of the project.',
-		path.resolve(commandCwd, './public'),
-	)
+	.option('--standaloneFolder <path>', 'Folder including NextJS standalone build. Parental folder should include more folders as well.', '.next/standalone')
+	.option('--publicFolder <path>', 'Folder where public assets are located, typically this folder is located in root of the project.', './public')
 	.option(
 		'--handlerPath <path>',
 		'Path to custom handler to be used to handle ApiGw events. By default this is provided for you.',
@@ -39,12 +31,20 @@ program
 	.option(
 		'--outputFolder <path>',
 		'Path to folder which should be used for outputting bundled ZIP files for your Lambda. It will be cleared before every script run.',
-		path.resolve(commandCwd, './next.out'),
+		'./next.out',
 	)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
 		const { standaloneFolder, publicFolder, handlerPath, outputFolder, cwd } = options
-		wrapProcess(packHandler({ commandCwd: cwd, handlerPath, outputFolder, publicFolder, standaloneFolder }))
+		wrapProcess(
+			packHandler({
+				commandCwd: cwd,
+				handlerPath, //: path.resolve(commandCwd, handlerPath),
+				outputFolder: path.resolve(cwd, outputFolder),
+				publicFolder: path.resolve(cwd, publicFolder),
+				standaloneFolder: path.resolve(cwd, standaloneFolder),
+			}),
+		)
 	})
 
 program
